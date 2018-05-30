@@ -1,3 +1,7 @@
+################################################################################
+### test with pytesseract
+################################################################################
+
 from PIL import Image
 import pytesseract
 
@@ -25,9 +29,12 @@ imag = Image.open('ocr2.jpg')
 pytesseract.image_to_string(imag,lang='eng')
 
 
-#%%
+################################################################################
+### convert dataset from byte to csv
+################################################################################
+
 #path to folder with data
-path = './input/'
+path = '/home/irza/Projects/gzip/'
 def convert(imgf, labelf, outf, n):
     f = open(imgf, "rb")
     o = open(outf, "w")
@@ -49,26 +56,36 @@ def convert(imgf, labelf, outf, n):
     o.close()
     l.close()
 
+#converting dataset for letters
+
 convert(path+"emnist-letters-train-images-idx3-ubyte", path+"emnist-letters-train-labels-idx1-ubyte",
         path+"letter_mnist_train.csv", 60000)
+
+#the test data are still part of the train data
+#better use split function to split the data
+
 convert(path+"emnist-letters-test-images-idx3-ubyte", path+"emnist-letters-test-labels-idx1-ubyte",
         path+"letter_mnist_test.csv", 10000)
 
+#converting dataset for digits
 
 convert(path+"emnist-digits-train-images-idx3-ubyte", path+"emnist-digits-train-labels-idx1-ubyte",
         path+"digits_mnist_train.csv", 60000)
 convert(path+"emnist-digits-test-images-idx3-ubyte", path+"emnist-digits-test-labels-idx1-ubyte",
         path+"digits_mnist_test.csv", 10000)
-#%%
 
+
+################################################################################
+### building the model
+################################################################################
 
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 
 #data source
 #https://pjreddie.com/projects/mnist-in-csv/
-df_train = pd.read_csv('./input/letter_mnist_train.csv')
-df_test = pd.read_csv('./input/letter_mnist_test.csv')
+df_train = pd.read_csv('/home/irza/Projects/gzip/letter_mnist_train.csv')
+df_test = pd.read_csv('/home/irza/Projects/gzip/letter_mnist_test.csv')
 #df_train = pd.read_csv('./input/mnist_train.csv')
 #df_test = pd.read_csv('./input/mnist_test.csv')
 
@@ -127,7 +144,7 @@ def cnn_model(result_class_size):
 
 
 #turn the label to 42000 binary class matrix 
-arr_train_y = np_utils.to_categorical(df_train_y['5'].values)
+arr_train_y = np_utils.to_categorical(df_train_y.iloc[:,0].values)
 model = cnn_model(arr_train_y.shape[1])
 model.summary()
 
@@ -181,4 +198,5 @@ for j in range(0,2):
      ax[j][i].set_title("Index:{} \nPrediction:{}".format(start_idx, prediction[start_idx]))
      start_idx +=1
      
-     
+
+#evaluation metrix is still missing
