@@ -61,9 +61,6 @@ def convert(imgf, labelf, outf, n):
 convert(path+"emnist-letters-train-images-idx3-ubyte", path+"emnist-letters-train-labels-idx1-ubyte",
         path+"letter_mnist_train.csv", 60000)
 
-#the test data are still part of the train data
-#better use split function to split the data
-
 convert(path+"emnist-letters-test-images-idx3-ubyte", path+"emnist-letters-test-labels-idx1-ubyte",
         path+"letter_mnist_test.csv", 10000)
 
@@ -88,7 +85,6 @@ df_train = pd.read_csv('/home/irza/Projects/gzip/letter_mnist_train.csv')
 df_test = pd.read_csv('/home/irza/Projects/gzip/letter_mnist_test.csv')
 #df_train = pd.read_csv('./input/mnist_train.csv')
 #df_test = pd.read_csv('./input/mnist_test.csv')
-
 
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten
@@ -199,4 +195,4 @@ for j in range(0,2):
      start_idx +=1
      
 
-#evaluation metrix is still missing
+#evaluation metrix for testing data is still missing
