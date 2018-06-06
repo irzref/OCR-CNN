@@ -195,4 +195,54 @@ for j in range(0,2):
      start_idx +=1
      
 
+<<<<<<< HEAD
+#evaluation matrix for testing data is still missing
+     
+     
+     
+#http://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html
+     
+from sklearn.metrics import confusion_matrix
+confusion_matrix(y_true, y_pred)
+
+     
+         
+     
+################################################################################
+### save and load to JSON-file
+################################################################################
+
+
+####source: https://machinelearningmastery.com/save-load-keras-deep-learning-models/
+
+
+#serialize model to JSON
+model_json = model.to_json()
+with open("model.json", "w") as json_file:
+    json_file.write(model_json)
+#serialize weights to HDF5
+model.save_weights("model.h5")
+print("Saved model to disk")
+
+# load json and create model
+json_file = open('model.json', 'r')
+loaded_model_json = json_file.read()
+json_file.close()
+loaded_model = model_from_json(loaded_model_json)
+# load weights into new model
+loaded_model.load_weights("model.h5")
+print("Loaded model from disk")
+ 
+# evaluate loaded model on test data
+loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+score = loaded_model.evaluate(split_train_x, split_train_y, verbose=0)
+print("%s: %.2f%%" % (loaded_model.metrics_names[1], score[1]*100))
+
+
+################################################################################
+### 
+################################################################################
+     
+=======
 #evaluation metrix for testing data is still missing
+>>>>>>> parent of a5974cb... save/load model to JSON file
