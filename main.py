@@ -81,10 +81,10 @@ import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 
 #data source
 #https://pjreddie.com/projects/mnist-in-csv/
-df_train = pd.read_csv('/home/irza/Projects/gzip/letter_mnist_train.csv')
-df_test = pd.read_csv('/home/irza/Projects/gzip/letter_mnist_test.csv')
-#df_train = pd.read_csv('./input/mnist_train.csv')
-#df_test = pd.read_csv('./input/mnist_test.csv')
+#df_train = pd.read_csv('/home/irza/Projects/gzip/letter_mnist_train.csv')
+#df_test = pd.read_csv('/home/irza/Projects/gzip/letter_mnist_test.csv')
+df_train = pd.read_csv('./input/letter_mnist_train.csv')
+df_test = pd.read_csv('./input/letter_mnist_test20000.csv')
 
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten
@@ -195,16 +195,16 @@ for j in range(0,2):
      start_idx +=1
      
 
-<<<<<<< HEAD
+
+
 #evaluation matrix for testing data is still missing
      
-     
-     
+
 #http://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html
      
 from sklearn.metrics import confusion_matrix
-confusion_matrix(y_true, y_pred)
-
+#confusion_matrix(y_true, y_pred)
+conf = confusion_matrix(df_test_y,data_to_submit.iloc[:,1] )
      
          
      
@@ -215,7 +215,7 @@ confusion_matrix(y_true, y_pred)
 
 ####source: https://machinelearningmastery.com/save-load-keras-deep-learning-models/
 
-
+from keras.models import model_from_json
 #serialize model to JSON
 model_json = model.to_json()
 with open("model.json", "w") as json_file:
