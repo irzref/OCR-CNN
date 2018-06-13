@@ -171,7 +171,7 @@ datagen.fit(split_train_x)
 
 
 model.fit_generator(datagen.flow(split_train_x,split_train_y, batch_size=64),
-                              epochs = 10, validation_data = (split_val_x,split_val_y),
+                              epochs = 30, validation_data = (split_val_x,split_val_y),
                               verbose = 2, steps_per_epoch=700 
                               , callbacks=[reduce_lr])
 
@@ -205,7 +205,9 @@ for j in range(0,2):
 from sklearn.metrics import confusion_matrix
 #confusion_matrix(y_true, y_pred)
 conf = confusion_matrix(df_test_y,data_to_submit.iloc[:,1] )
-     
+np.savetxt("cm.csv",conf,delimiter=",",fmt="%10i")
+#calculated accuracy from cm
+np.round(np.trace(conf) / len(df_test_y),5)
          
      
 ################################################################################
